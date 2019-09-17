@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import DayPicker from 'react-day-picker';
+import 'react-day-picker/lib/style.css'
 import Select from 'react-select'
 import articles from "./fixtures"
 import ArticleList from "./components/ArticleList/ArticleList"
@@ -11,6 +13,7 @@ class App extends Component {
     render() {
         return (
             <div>
+                <DayPicker />
                 <Select
                     options={this.options}
                     value={this.state.openItem}

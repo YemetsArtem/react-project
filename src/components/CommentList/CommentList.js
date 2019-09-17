@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Comment from "../Comment/Comment";
 class CommentList extends Component {
     state = {
-        isOpen:false
+        isOpen:true
     }
     render() {
         const {comments} = this.props;
