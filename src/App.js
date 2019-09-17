@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import Select from 'react-select'
+import articles from "./fixtures"
+import ArticleList from "./components/ArticleList/ArticleList"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+    state = {
+        openItem: null
+    }
+    render() {
+        return (
+            <div>
+                <Select
+                    options={this.options}
+                    value={this.state.openItem}
+                    onChange={this.handleSelect} 
+                />
+                <ArticleList
+                    articles={articles}
+                    ref={this.getRef}
+                />
+            </div>
+        )
+    }
+
+    get options() {
+        return articles.map(article => ({
+            label: article.title,
+            value: article.id
+        }))
+    }
+
+    handleSelect = openItem => this.setState({ openItem })
 }
 
-export default App;
+export default App
