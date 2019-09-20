@@ -1,15 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import DayPicker from 'react-day-picker';
-import 'react-day-picker/lib/style.css'
-import Select from 'react-select'
-import articles from "./fixtures"
-import ArticleList from "./components/ArticleList/ArticleList"
-
+import 'react-day-picker/lib/style.css';
+import Select from 'react-select';
+import articles from "./fixtures";
+import ArticleList from "./components/ArticleList";
+import Counter from "./components/Counter";
 
 class App extends Component {
     state = {
         openItem: null
     }
+
     render() {
         return (
             <div>
@@ -19,9 +20,9 @@ class App extends Component {
                     value={this.state.openItem}
                     onChange={this.handleSelect} 
                 />
-                <ArticleList
-                    articles={articles}
-                    ref={this.getRef}
+                <Counter />
+                <ArticleList 
+                    articles={articles} 
                 />
             </div>
         )

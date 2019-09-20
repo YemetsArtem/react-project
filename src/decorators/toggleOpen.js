@@ -1,15 +1,12 @@
 import React from "react";
 
 export default OriginalComponent =>
-    class Accordion extends React.Component {
+    class ToggleOpen extends React.Component {
         state = {
-            openItemId: null
+            isOpen: false
         };
 
-        toggleOpenItem = openItemId =>
-            this.setState({
-                openItemId: this.state.openItemId === openItemId ? null : openItemId
-            });
+        toggleOpenItem = () => this.setState({ isOpen: !this.state.isOpen });
 
         render() {
             return (
