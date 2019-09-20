@@ -1,6 +1,8 @@
 import React, { PureComponent } from "react";
 import PropTypes from 'prop-types';
 import CSSTransition from 'react-addons-css-transition-group';
+import { connect } from "react-redux";
+import { deleteArticle } from "../../ac";
 import CommentList from '../CommentList';
 import "./style.css";
 
@@ -42,11 +44,20 @@ class Article extends PureComponent {
         const header =  <header className="article-title">
                             <h3>{article.title}</h3>
                             <button onClick={this.handleBtnClick}>{text}</button>
+                            <button onClick={this.handleDelete}>delete</button>
                         </header>  
         return header;
     }
 
-    handleBtnClick = () => this.props.toggleOpen(this.props.article.id);
+    handleBtnClick = () => {
+        const {toggleOpen, article} = this.props;
+        toggleOpen(article.id);
+    }
+
+    handleDelete = () => {
+        const {deleteArticle, article} = this.props;
+        deleteArticle(article.id);
+    }
 }
 
-export default Article;
+export default connect(null, { deleteArticle })(Article);
