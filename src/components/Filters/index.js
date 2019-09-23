@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import {connect} from "react-redux";
 import SelectFilter from './select'
-import DayPicker from 'react-day-picker';
-import 'react-day-picker/lib/style.css';
+import DateRange from './date-range'
 
 class Filters extends Component {
   static propTypes = {}
@@ -10,13 +8,11 @@ class Filters extends Component {
   render() {
     return (
       <div>
-        <SelectFilter articles={this.props.articles} />
-        <DayPicker />
+        <SelectFilter />
+        <DateRange />
       </div>
     )
   }
 }
 
-export default connect((state) => ({
-  articles: state.articles
-}))(Filters);
+export default (Filters);

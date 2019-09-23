@@ -1,0 +1,6 @@
+.new_message {
+    display: flex;
+    flex-direction: column;
+    width:250px;
+    margin-left: 40px;
+}

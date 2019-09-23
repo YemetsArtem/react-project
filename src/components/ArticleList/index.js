@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { connect } from "react-redux";
+import { filtratedArticles } from "../../selectors";
 import Article from "../Article";
 import accordion from "../../decorators/accordion";
 
@@ -11,14 +12,12 @@ class ArticleList extends Component {
         toggleOpenItem: PropTypes.func.isRequired
     }
 
-    render() {
+    render() {       
         return <ul>{this.body}</ul>;
     }
 
     get body() {
-        const { toggleOpenItem, openItemId, articles, filters, state } = this.props;
-
-        console.log("filters = ", filters, state);
+        const { toggleOpenItem, openItemId, articles } = this.props;
         
         return articles.map(article => (
             <li key={article.id} className="test__article-list--item">
@@ -34,7 +33,5 @@ class ArticleList extends Component {
 
 
 export default connect((state) => ({
-    state:state,
-    articles: state.articles,
-    filters:state.filters
+    articles: filtratedArticles(state)
 }))(accordion(ArticleList));
