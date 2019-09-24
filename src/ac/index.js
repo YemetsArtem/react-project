@@ -47,19 +47,27 @@ export function addComment(comment, articleId) {
 }
 
 export function loadAllArticles() {
-  return {
-    type: LOAD_ALL_ARTICLES,
-    callAPI: "/api/article"
+  return dispatch => {
+    dispatch({
+      type: LOAD_ALL_ARTICLES + START
+    });
+
+    fetch("/api/article")
+      .then(res => res.json())
+      .then(response =>
+        dispatch({
+          type: LOAD_ALL_ARTICLES + SUCCESS,
+          response
+        })
+      )
+      .catch(error =>
+        dispatch({
+          type: LOAD_ALL_ARTICLES + FAIL,
+          error
+        })
+      );
   };
 }
-
-// export function loadArticleById(id) {
-//   return {
-//     type: LOAD_ARTICLE,
-//     payload: { id },
-//     callAPI: `/api/article/${id}`
-//   };
-// }
 
 export function loadArticleById(id) {
   return dispatch => {
