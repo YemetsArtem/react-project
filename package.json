@@ -1,45 +1,51 @@
 {
-  "name": "react-project",
+  "name": "basic-10-09",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
-    "@types/react-transition-group": "^4.2.2",
-    "immutable": "^4.0.0-rc.12",
-    "jest-cli": "^24.9.0",
-    "react": "^16.9.0",
+    "connected-react-router": "^4.5.0",
+    "history": "^4.7.2",
+    "immutable": "^4.0.0-rc.10",
+    "jest-cli": "^20.0.4",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.0",
     "react-addons-css-transition-group": "^15.6.2",
-    "react-day-picker": "^7.3.2",
-    "react-dom": "^16.9.0",
-    "react-redux": "^7.1.1",
-    "react-scripts": "3.1.1",
-    "react-select": "^3.0.4",
-    "react-transition-group": "^4.3.0",
-    "redux": "^4.0.4",
-    "reselect": "^4.0.0"
+    "react-day-picker": "^7.2.4",
+    "react-dom": "^16.5.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5",
+    "react-select": "^2.0.0",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^3.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"npm run api\"",
+    "api": "node simple_api/server.js",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "prettier": "prettier --write \"src/**/*.js\"",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "devDependencies": {
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0"
+    "concurrently": "^3.6.0",
+    "enzyme": "^3.6.0",
+    "enzyme-adapter-react-16": "^1.5.0",
+    "husky": "^1.0.0-rc.6",
+    "lint-staged": "^7.1.0",
+    "prettier": "^1.12.1"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run prettier",
+      "git add"
+    ]
   }
 }
