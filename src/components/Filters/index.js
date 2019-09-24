@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import SelectFilter from './select'
-import DateRange from './date-range'
+import React, { Component } from "react";
+import SelectFilter from "./select";
+import DateRange from "./date-range";
 
 class Filters extends Component {
-  static propTypes = {}
+  static propTypes = {};
 
   render() {
     return (
@@ -11,8 +11,8 @@ class Filters extends Component {
         <SelectFilter />
         <DateRange />
       </div>
-    )
+    );
   }
 }
 
-export default (Filters);
+export default Filters;
