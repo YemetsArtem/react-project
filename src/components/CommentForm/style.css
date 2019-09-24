@@ -1,6 +1,13 @@
-.new_message {
+.comment-form {
     display: flex;
     flex-direction: column;
     width:250px;
     margin-left: 40px;
+    padding: 10px;
+    border: 1px solid gray;
+}
+
+.save-btn {
+    margin: 10px 0;
+    width:100px;
 }

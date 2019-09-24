@@ -9,7 +9,7 @@ import "./style.css";
 class CommentList extends Component {
     static propTypes = {
         comments: PropTypes.array,
-        openItemId: PropTypes.object,
+        openItemId: PropTypes.string,
         toggleOpenItem: PropTypes.func.isRequired
     }
 
@@ -31,23 +31,24 @@ class CommentList extends Component {
     get header() {
         const { isOpen, toggleOpenItem } = this.props;
         const text = isOpen ? "hide comments" : "show comments";
-        const header = <header>
-            <h4> Comment list: </h4>
-            <button onClick={toggleOpenItem}>{text}</button>
-        </header>
+        const header =  <header>
+                            <h4> Comment list: </h4>
+                            <button onClick={toggleOpenItem}>{text}</button>
+                        </header>
+
         return header;
     }
 
     get body() {
-        const { isOpen, comments } = this.props;
-        const body =
-            <div className="comment-body">
-                {comments
-                    ? <ul> {this.getComments(comments)} </ul>
-                    : <small> No comments yet </small>
-                }
-                <CommentForm />
-            </div>
+        const { isOpen, comments, openItemId } = this.props;
+        const body = <div className="comment-body">
+                        {
+                            comments
+                                ? <ul> {this.getComments(comments)} </ul>
+                                : <small> No comments yet </small>
+                        }
+                        <CommentForm articleId={openItemId} />
+                     </div>
 
         return (isOpen && body);
     }

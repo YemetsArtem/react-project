@@ -32,7 +32,10 @@ class Article extends PureComponent {
         const { article, isOpen } = this.props;
         const body = <section className="article-body">
                         <p>{article.text}</p>
-                        <CommentList comments={article.comments} />
+                        <CommentList 
+                            comments={article.comments} 
+                            openItemId={article.id}
+                        />
                     </section> 
 
         return (isOpen && body);

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/react-transition-group": "^4.2.2",
+    "immutable": "^4.0.0-rc.12",
     "jest-cli": "^24.9.0",
     "react": "^16.9.0",
     "react-addons-css-transition-group": "^15.6.2",
