@@ -1,17 +1,32 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import CSSTransition from "react-addons-css-transition-group";
+import { connect } from "react-redux";
+import { loadArticleComments } from "../../ac";
 import Comment from "../Comment";
 import CommentForm from "../CommentForm";
 import toggleOpen from "../../decorators/toggleOpen";
-import CSSTransition from "react-addons-css-transition-group";
+import Loader from "../common/loader";
 import "./style.css";
 
 class CommentList extends Component {
   static propTypes = {
-    comments: PropTypes.array,
-    openItemId: PropTypes.string,
+    article: PropTypes.object,
+    isOpen: PropTypes.bool,
     toggleOpenItem: PropTypes.func.isRequired
   };
+
+  componentDidUpdate(oldProps) {
+    const { isOpen, article, loadArticleComments } = this.props;
+    if (
+      isOpen &&
+      !oldProps.isOpen &&
+      !article.commentsLoading &&
+      !article.commentsLoaded
+    ) {
+      loadArticleComments(article.id);
+    }
+  }
 
   render() {
     return (
@@ -42,7 +57,15 @@ class CommentList extends Component {
   }
 
   get body() {
-    const { isOpen, comments, openItemId } = this.props;
+    const {
+      article: { comments, id, commentsLoading, commentsLoaded },
+      isOpen
+    } = this.props;
+
+    if (!isOpen) return null;
+    if (commentsLoading) return <Loader />;
+    if (!commentsLoaded) return null;
+
     const body = (
       <div className="comment-body">
         {comments.length !== 0 ? (
@@ -50,7 +73,7 @@ class CommentList extends Component {
         ) : (
           <small> No comments yet </small>
         )}
-        <CommentForm articleId={openItemId} />
+        <CommentForm articleId={id} />
       </div>
     );
 
@@ -66,4 +89,7 @@ class CommentList extends Component {
   }
 }
 
-export default toggleOpen(CommentList);
+export default connect(
+  null,
+  { loadArticleComments }
+)(toggleOpen(CommentList));

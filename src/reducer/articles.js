@@ -3,18 +3,12 @@ import {
   ADD_COMMENT,
   LOAD_ALL_ARTICLES,
   LOAD_ARTICLE,
+  LOAD_ARTICLE_COMMENTS,
   START,
   SUCCESS
 } from "../constants";
 import { arrToMap } from "./utils";
 import { Record } from "immutable";
-
-const ReducerRecord = Record({
-  entities: arrToMap([], ArticleRecord),
-  loading: false,
-  loaded: false,
-  error: null
-});
 
 const ArticleRecord = Record({
   title: null,
@@ -22,7 +16,16 @@ const ArticleRecord = Record({
   text: null,
   date: null,
   loading: false,
+  commentsLoading: false,
+  commentsLoaded: false,
   comments: []
+});
+
+const ReducerRecord = Record({
+  entities: arrToMap([], ArticleRecord),
+  loading: false,
+  loaded: false,
+  error: null
 });
 
 export default (articlesState = new ReducerRecord(), action) => {
@@ -55,6 +58,17 @@ export default (articlesState = new ReducerRecord(), action) => {
         ["entities", payload.id],
         new ArticleRecord(response)
       );
+
+    case LOAD_ARTICLE_COMMENTS + START:
+      return articlesState.setIn(
+        ["entities", payload.articleId, "commentsLoading"],
+        true
+      );
+
+    case LOAD_ARTICLE_COMMENTS + SUCCESS:
+      return articlesState
+        .setIn(["entities", payload.articleId, "commentsLoading"], false)
+        .setIn(["entities", payload.articleId, "commentsLoaded"], true);
 
     default:
       return articlesState;

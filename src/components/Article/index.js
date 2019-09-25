@@ -22,6 +22,7 @@ class Article extends PureComponent {
     if (!oldProps.isOpen && isOpen && !article.text)
       loadArticleById(article.id);
   }
+
   render() {
     return (
       <article className="article">
@@ -45,7 +46,7 @@ class Article extends PureComponent {
     const body = (
       <section className="article-body">
         <p>{article.text}</p>
-        <CommentList comments={article.comments} openItemId={article.id} />
+        <CommentList comments={article.comments} article={article} />
       </section>
     );
 
