@@ -11,6 +11,11 @@ export const articlesListSelector = createSelector(
   articlesMapSelector,
   articlesMap => articlesMap.valueSeq().toJS()
 );
+export const articlesSelector = createSelector(
+  articlesMapSelector,
+  idSelector,
+  (articles, id) => articles.get(id)
+);
 
 export const filtratedArticles = createSelector(
   articlesListSelector,

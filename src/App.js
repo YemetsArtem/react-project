@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Route, NavLink } from "react-router-dom";
+import { Route, NavLink, Switch } from "react-router-dom";
 import Filters from "./components/Filters";
-import ArticleList from "./components/ArticleList";
+import ArticlePage from "./components/Routes/ArticlesPage";
+import CommentsPage from "./components/Routes/CommentsPage";
 import Counter from "./components/Counter";
 
 class App extends Component {
@@ -9,7 +10,7 @@ class App extends Component {
     return (
       <div>
         <nav>
-          <h4>Navigation: </h4>
+          <h3>Navigation: </h3>
           <ul>
             <li>
               <NavLink to="/counter" activeStyle={{ color: "red" }}>
@@ -26,11 +27,20 @@ class App extends Component {
                 Articles
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/comments" activeStyle={{ color: "red" }}>
+                Comments
+              </NavLink>
+            </li>
           </ul>
         </nav>
-        <Route path="/filters" component={Filters} />
-        <Route path="/counter" component={Counter} />
-        <Route path="/articles" component={ArticleList} />
+        <Switch>
+          <Route path="/filters" component={Filters} exact />
+          <Route path="/counter" component={Counter} exact />
+          <Route path="/comments" component={CommentsPage} exact />
+          <Route path="/articles/new" render={() => <h3>New article</h3>} />
+          <Route path="/articles" component={ArticlePage} />
+        </Switch>
       </div>
     );
   }

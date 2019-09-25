@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CSSTransition from "react-addons-css-transition-group";
 import { connect } from "react-redux";
 import { deleteArticle, loadArticleById } from "../../ac";
+import { articlesSelector } from "../../selectors";
 import Loader from "../common/loader";
 import CommentList from "../CommentList";
 import "./style.css";
@@ -10,23 +11,25 @@ import "./style.css";
 class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
-      title: PropTypes.string.isRequired,
+      title: PropTypes.string,
       text: PropTypes.string
-    }).isRequired,
-    isOpen: PropTypes.bool,
-    toggleOpen: PropTypes.func.isRequired
+    })
   };
 
-  componentDidUpdate(oldProps) {
-    const { isOpen, article, loadArticleById } = this.props;
-    if (!oldProps.isOpen && isOpen && !article.text)
-      loadArticleById(article.id);
+  componentDidMount() {
+    const { article, id, loadArticleById } = this.props;
+    if (!article || !article.text) loadArticleById(id);
   }
 
   render() {
+    if (!this.props.article) return null;
+
     return (
       <article className="article">
-        {this.header}
+        <header className="article-title">
+          <h3>{this.props.article.title}</h3>
+          <button onClick={this.handleDelete}>delete</button>
+        </header>
         <CSSTransition
           transitionName="article"
           transitionEnterTimeout={500}
@@ -39,45 +42,26 @@ class Article extends PureComponent {
   }
 
   get body() {
-    const { article, isOpen } = this.props;
-
-    if (article.loading) return <Loader />;
-
-    const body = (
+    const { article } = this.props;
+    return article.loading ? (
+      <Loader />
+    ) : (
       <section className="article-body">
         <p>{article.text}</p>
         <CommentList comments={article.comments} article={article} />
       </section>
     );
-
-    return isOpen && body;
   }
-
-  get header() {
-    const { article, isOpen } = this.props;
-    const text = isOpen ? "close" : "open";
-    const header = (
-      <header className="article-title">
-        <h3>{article.title}</h3>
-        <button onClick={this.handleBtnClick}>{text}</button>
-        <button onClick={this.handleDelete}>delete</button>
-      </header>
-    );
-    return header;
-  }
-
-  handleBtnClick = () => {
-    const { toggleOpen, article } = this.props;
-    toggleOpen(article.id);
-  };
 
   handleDelete = () => {
-    const { deleteArticle, article } = this.props;
-    deleteArticle(article.id);
+    const { deleteArticle, id } = this.props;
+    deleteArticle(id);
   };
 }
 
 export default connect(
-  null,
+  (state, props) => ({
+    article: articlesSelector(state, props)
+  }),
   { deleteArticle, loadArticleById }
 )(Article);
