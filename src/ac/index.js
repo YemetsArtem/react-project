@@ -11,33 +11,34 @@ import {
   FAIL,
   SUCCESS,
   START
-} from "../constants";
+} from '../constants'
+import { push } from 'connected-react-router'
 
 export function increment() {
   return {
     type: INCREMENT
-  };
+  }
 }
 
 export function deleteArticle(id) {
   return {
     type: DELETE_ARTICLE,
     payload: { id }
-  };
+  }
 }
 
 export function changeSelection(selected) {
   return {
     type: CHANGE_SELECTION,
     payload: { selected }
-  };
+  }
 }
 
 export function changeDateRange(dateRange) {
   return {
     type: CHANGE_DATE_RANGE,
     payload: { dateRange }
-  };
+  }
 }
 
 export function addComment(comment, articleId) {
@@ -45,112 +46,117 @@ export function addComment(comment, articleId) {
     type: ADD_COMMENT,
     payload: { comment, articleId },
     generateId: true
-  };
+  }
 }
 
 export function loadAllArticles() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: LOAD_ALL_ARTICLES + START
-    });
+    })
 
-    fetch("/api/article")
-      .then(res => res.json())
-      .then(response =>
+    fetch('/api/article')
+      .then((res) => res.json())
+      .then((response) =>
         dispatch({
           type: LOAD_ALL_ARTICLES + SUCCESS,
           response
         })
       )
-      .catch(error =>
+      .catch((error) =>
         dispatch({
           type: LOAD_ALL_ARTICLES + FAIL,
           error
         })
-      );
-  };
+      )
+  }
 }
 
 export function loadArticleById(id) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: LOAD_ARTICLE + START,
       payload: { id }
-    });
+    })
 
     fetch(`/api/article/${id}`)
-      .then(res => res.json())
-      .then(response =>
+      .then((res) => {
+        if (res.status >= 400) throw new Error(res.statusText)
+        return res.json()
+      })
+      .then((response) =>
         dispatch({
           type: LOAD_ARTICLE + SUCCESS,
           payload: { id },
           response
         })
       )
-      .catch(error =>
+      .catch((error) => {
         dispatch({
           type: LOAD_ARTICLE + FAIL,
           payload: { id },
           error
         })
-      );
-  };
+
+        dispatch(push('/error'))
+      })
+  }
 }
 
 export function loadArticleComments(articleId) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: LOAD_ARTICLE_COMMENTS + START,
       payload: { articleId }
-    });
+    })
 
     fetch(`/api/comment?article=${articleId}`)
-      .then(res => res.json())
-      .then(response =>
+      .then((res) => res.json())
+      .then((response) =>
         dispatch({
           type: LOAD_ARTICLE_COMMENTS + SUCCESS,
           payload: { articleId },
           response: response
         })
       )
-      .catch(error =>
+      .catch((error) =>
         dispatch({
           type: LOAD_ARTICLE_COMMENTS + FAIL,
           payload: { articleId },
           error
         })
-      );
-  };
+      )
+  }
 }
 
 export function checkAndLoadCommentsForPage(page) {
   return (dispatch, getState) => {
     const {
       comments: { pagination }
-    } = getState();
-    if (pagination.getIn([page, "loading"]) || pagination.getIn([page, "ids"]))
-      return;
+    } = getState()
+    if (pagination.getIn([page, 'loading']) || pagination.getIn([page, 'ids']))
+      return
 
     dispatch({
       type: LOAD_COMMENTS_FOR_PAGE,
       payload: { page }
-    });
+    })
 
     fetch(`/api/comment?limit=5&offset=${(page - 1) * 5}`)
-      .then(res => res.json())
-      .then(response =>
+      .then((res) => res.json())
+      .then((response) =>
         dispatch({
           type: LOAD_COMMENTS_FOR_PAGE + SUCCESS,
           payload: { page },
           response
         })
       )
-      .catch(error =>
+      .catch((error) =>
         dispatch({
           type: LOAD_COMMENTS_FOR_PAGE + FAIL,
           payload: { page },
           error
         })
-      );
-  };
+      )
+  }
 }

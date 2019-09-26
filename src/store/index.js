@@ -1,17 +1,26 @@
-import { createStore, applyMiddleware, compose } from "redux";
-import reducer from "../reducer";
-import thunk from "redux-thunk";
-import logger from "../middlewares/logger";
-import randomId from "../middlewares/randomId";
+import { createStore, applyMiddleware, compose } from 'redux'
+import reducer from '../reducer'
+import thunk from 'redux-thunk'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
+import logger from '../middlewares/logger'
+import randomId from '../middlewares/randomId'
+import history from '../history'
 
 const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+        // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+      })
+    : compose
 
-const enhancer = composeEnhancers(applyMiddleware(thunk, randomId, logger));
+const enhancer = composeEnhancers(
+  applyMiddleware(thunk, routerMiddleware(history), randomId, logger)
+  // other store enhancers if any
+)
 
-const store = createStore(reducer, enhancer);
-window.store = store;
+const store = createStore(connectRouter(history)(reducer), enhancer)
 
-export default store;
+//dev only!!!
+window.store = store
+
+export default store
