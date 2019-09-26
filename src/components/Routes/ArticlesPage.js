@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Route } from "react-router-dom";
-import ArticleList from "../ArticleList";
-import Article from "../Article";
+import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
+import ArticleList from '../ArticleList'
+import Article from '../Article'
 
 export class ArticlesPage extends Component {
   render() {
@@ -11,7 +11,7 @@ export class ArticlesPage extends Component {
         <ArticleList />
         <Route path="/articles/:id" children={this.getArticle} />
       </section>
-    );
+    )
   }
 
   getArticle = ({ match }) => {
@@ -19,8 +19,8 @@ export class ArticlesPage extends Component {
       <Article id={match.params.id} key={match.params.id} />
     ) : (
       <h3>Please select an Article...</h3>
-    );
-  };
+    )
+  }
 }
 
-export default ArticlesPage;
+export default ArticlesPage

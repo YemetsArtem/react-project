@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react'
 
-export default OriginalComponent =>
+export default (OriginalComponent) =>
   class Accordion extends React.Component {
     state = {
       openItemId: null
-    };
+    }
 
-    toggleOpenItem = openItemId =>
+    toggleOpenItem = (openItemId) =>
       this.setState({
         openItemId: this.state.openItemId === openItemId ? null : openItemId
-      });
+      })
 
     render() {
       return (
@@ -18,6 +18,6 @@ export default OriginalComponent =>
           {...this.state}
           toggleOpenItem={this.toggleOpenItem}
         />
-      );
+      )
     }
-  };
+  }

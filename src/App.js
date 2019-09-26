@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Route, NavLink, Switch, Redirect } from "react-router-dom";
-import Filters from "./components/Filters";
-import ArticlesPage from "./components/Routes/ArticlesPage";
-import CommentsPage from "./components/Routes/CommentsPage";
-import Counter from "./components/Counter";
+import React, { Component } from 'react'
+import { Route, NavLink, Switch, Redirect } from 'react-router-dom'
+import Filters from './components/Filters'
+import ArticlesPage from './components/Routes/ArticlesPage'
+import CommentsPage from './components/Routes/CommentsPage'
+import Counter from './components/Counter'
 
 class App extends Component {
   render() {
@@ -13,22 +13,22 @@ class App extends Component {
           <h3>Navigation: </h3>
           <ul>
             <li>
-              <NavLink to="/counter" activeStyle={{ color: "red" }}>
+              <NavLink to="/counter" activeStyle={{ color: 'red' }}>
                 Counter
               </NavLink>
             </li>
             <li>
-              <NavLink to="/filters" activeStyle={{ color: "red" }}>
+              <NavLink to="/filters" activeStyle={{ color: 'red' }}>
                 Filters
               </NavLink>
             </li>
             <li>
-              <NavLink to="/articles" activeStyle={{ color: "red" }}>
+              <NavLink to="/articles" activeStyle={{ color: 'red' }}>
                 Articles
               </NavLink>
             </li>
             <li>
-              <NavLink to="/comments" activeStyle={{ color: "red" }}>
+              <NavLink to="/comments" activeStyle={{ color: 'red' }}>
                 Comments
               </NavLink>
             </li>
@@ -48,8 +48,8 @@ class App extends Component {
           <Route path="*" render={() => <h1>Not Found Page</h1>} />
         </Switch>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

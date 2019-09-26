@@ -1,12 +1,12 @@
-import React, { PureComponent } from "react";
-import PropTypes from "prop-types";
-import CSSTransition from "react-addons-css-transition-group";
-import { connect } from "react-redux";
-import { deleteArticle, loadArticleById } from "../../ac";
-import { articleSelector } from "../../selectors";
-import Loader from "../common/loader";
-import CommentList from "../CommentList";
-import "./style.css";
+import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
+import CSSTransition from 'react-addons-css-transition-group'
+import { connect } from 'react-redux'
+import { deleteArticle, loadArticleById } from '../../ac'
+import { articleSelector } from '../../selectors'
+import Loader from '../common/loader'
+import CommentList from '../CommentList'
+import './style.css'
 
 class Article extends PureComponent {
   static propTypes = {
@@ -14,15 +14,15 @@ class Article extends PureComponent {
       title: PropTypes.string,
       text: PropTypes.string
     })
-  };
+  }
 
   componentDidMount() {
-    const { article, id, loadArticleById } = this.props;
-    if (!article || !article.text) loadArticleById(id);
+    const { article, id, loadArticleById } = this.props
+    if (!article || !article.text) loadArticleById(id)
   }
 
   render() {
-    if (!this.props.article) return null;
+    if (!this.props.article) return null
 
     return (
       <article className="article">
@@ -38,11 +38,11 @@ class Article extends PureComponent {
           {this.body}
         </CSSTransition>
       </article>
-    );
+    )
   }
 
   get body() {
-    const { article } = this.props;
+    const { article } = this.props
     return article.loading ? (
       <Loader />
     ) : (
@@ -50,13 +50,13 @@ class Article extends PureComponent {
         <p>{article.text}</p>
         <CommentList comments={article.comments} article={article} />
       </section>
-    );
+    )
   }
 
   handleDelete = () => {
-    const { deleteArticle, id } = this.props;
-    deleteArticle(id);
-  };
+    const { deleteArticle, id } = this.props
+    deleteArticle(id)
+  }
 }
 
 export default connect(
@@ -64,4 +64,4 @@ export default connect(
     article: articleSelector(state, props)
   }),
   { deleteArticle, loadArticleById }
-)(Article);
+)(Article)

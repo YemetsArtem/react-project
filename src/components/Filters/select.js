@@ -1,24 +1,24 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import Select from "react-select";
-import { connect } from "react-redux";
-import { changeSelection } from "../../ac";
-import { articlesListSelector, selectedSelector } from "../../selectors";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import Select from 'react-select'
+import { connect } from 'react-redux'
+import { changeSelection } from '../../ac'
+import { articlesListSelector, selectedSelector } from '../../selectors'
 
 class SelectFilter extends Component {
   static propTypes = {
     articles: PropTypes.array.isRequired
-  };
+  }
 
-  handleChange = selected => {
-    this.props.changeSelection(selected);
-  };
+  handleChange = (selected) => {
+    this.props.changeSelection(selected)
+  }
 
   get options() {
-    return this.props.articles.map(article => ({
+    return this.props.articles.map((article) => ({
       label: article.title,
       value: article.id
-    }));
+    }))
   }
 
   render() {
@@ -29,14 +29,14 @@ class SelectFilter extends Component {
         onChange={this.handleChange}
         isMulti
       />
-    );
+    )
   }
 }
 
 export default connect(
-  state => ({
+  (state) => ({
     selected: selectedSelector(state),
     articles: articlesListSelector(state)
   }),
   { changeSelection }
-)(SelectFilter);
+)(SelectFilter)

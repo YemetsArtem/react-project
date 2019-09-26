@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react'
 
-export default OriginalComponent =>
+export default (OriginalComponent) =>
   class ToggleOpen extends React.Component {
     state = {
       isOpen: false
-    };
+    }
 
-    toggleOpenItem = () => this.setState({ isOpen: !this.state.isOpen });
+    toggleOpenItem = () => this.setState({ isOpen: !this.state.isOpen })
 
     render() {
       return (
@@ -15,6 +15,6 @@ export default OriginalComponent =>
           {...this.state}
           toggleOpenItem={this.toggleOpenItem}
         />
-      );
+      )
     }
-  };
+  }
