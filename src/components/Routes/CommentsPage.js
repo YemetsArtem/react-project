@@ -1,15 +1,19 @@
-import React, { Component } from "react";
+import React from "react";
 import CommentsPagination from "../CommentsPagination";
-import { Router } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 
-class CommentsPage extends Component {
-  render() {
-    return <Router path="/comments/:page" render={getCommentsPagination} />;
-  }
-
-  getCommentsPagination = match => (
-    <CommentsPagination page={match.params.page} />
+function CommentsPage({ match }) {
+  return match.isExact ? (
+    <Redirect to="/comments/1" />
+  ) : (
+    <Route path="/comments/:page" render={getCommentsPaginator} />
   );
 }
+
+function getCommentsPaginator({ match }) {
+  return <CommentsPagination page={match.params.page} />;
+}
+
+CommentsPage.propTypes = {};
 
 export default CommentsPage;

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CSSTransition from "react-addons-css-transition-group";
 import { connect } from "react-redux";
 import { deleteArticle, loadArticleById } from "../../ac";
-import { articlesSelector } from "../../selectors";
+import { articleSelector } from "../../selectors";
 import Loader from "../common/loader";
 import CommentList from "../CommentList";
 import "./style.css";
@@ -61,7 +61,7 @@ class Article extends PureComponent {
 
 export default connect(
   (state, props) => ({
-    article: articlesSelector(state, props)
+    article: articleSelector(state, props)
   }),
   { deleteArticle, loadArticleById }
 )(Article);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Route, NavLink, Switch } from "react-router-dom";
+import { Route, NavLink, Switch, Redirect } from "react-router-dom";
 import Filters from "./components/Filters";
-import ArticlePage from "./components/Routes/ArticlesPage";
+import ArticlesPage from "./components/Routes/ArticlesPage";
 import CommentsPage from "./components/Routes/CommentsPage";
 import Counter from "./components/Counter";
 
@@ -35,11 +35,17 @@ class App extends Component {
           </ul>
         </nav>
         <Switch>
-          <Route path="/filters" component={Filters} exact />
+          <Redirect from="/" to="/articles" exact />
           <Route path="/counter" component={Counter} exact />
-          <Route path="/comments" component={CommentsPage} exact />
-          <Route path="/articles/new" render={() => <h3>New article</h3>} />
-          <Route path="/articles" component={ArticlePage} />
+          <Route path="/filters" component={Filters} />
+          <Route
+            path="/articles/new"
+            render={() => <h1>New Article Page</h1>}
+          />
+          <Route path="/articles" component={ArticlesPage} />
+          <Route path="/comments" component={CommentsPage} />
+          <Route path="/error" render={() => <h1>Error Page</h1>} />
+          <Route path="*" render={() => <h1>Not Found Page</h1>} />
         </Switch>
       </div>
     );

@@ -9,9 +9,10 @@ export const selectedSelector = state => state.filters.selected;
 export const idSelector = (_, props) => props.id;
 export const articlesListSelector = createSelector(
   articlesMapSelector,
-  articlesMap => articlesMap.valueSeq().toJS()
+  articlesMap => articlesMap.valueSeq().toArray()
 );
-export const articlesSelector = createSelector(
+
+export const articleSelector = createSelector(
   articlesMapSelector,
   idSelector,
   (articles, id) => articles.get(id)
@@ -26,13 +27,10 @@ export const filtratedArticles = createSelector(
 
     return articles.filter(article => {
       const published = Date.parse(article.date);
-      const isSeleted = !selected || !selected.length;
-      const isRanged = !from || !to || (published > from && published < to);
-
       return (
-        (isSeleted ||
+        (!selected.length ||
           selected.find(selected => selected.value === article.id)) &&
-        isRanged
+        (!from || !to || (published > from && published < to))
       );
     });
   }
@@ -42,3 +40,17 @@ export const createCommentSelector = () =>
   createSelector(commentsSelector, idSelector, (comments, id) => {
     return comments.get(id);
   });
+
+export const totalCommentsSelector = state => state.comments.total;
+export const commentsPagenationSelector = state => state.comments.pagination;
+export const pageSelector = (_, props) => props.page;
+export const commentsPageIdsSelector = createSelector(
+  commentsPagenationSelector,
+  pageSelector,
+  (pagination, page) => pagination.getIn([page, "ids"])
+);
+export const commentsPageLoadingSelector = createSelector(
+  commentsPagenationSelector,
+  pageSelector,
+  (pagination, page) => pagination.getIn([page, "loading"])
+);
