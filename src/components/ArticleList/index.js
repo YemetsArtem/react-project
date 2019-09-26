@@ -38,7 +38,8 @@ class ArticleList extends Component {
 export default connect(
   (state) => ({
     articles: filtratedArticles(state),
-    loading: articlesLoadingSelector(state)
+    loading: articlesLoadingSelector(state),
+    router: state.router
   }),
   { fetchData: loadAllArticles }
 )(ArticleList)

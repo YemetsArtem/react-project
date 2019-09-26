@@ -7,6 +7,7 @@ import Comment from '../Comment'
 import CommentForm from '../CommentForm'
 import toggleOpen from '../../decorators/toggleOpen'
 import Loader from '../common/loader'
+import { Consumer as UserConsumer } from '../contexts/user'
 import './style.css'
 
 class CommentList extends Component {
@@ -18,12 +19,7 @@ class CommentList extends Component {
 
   componentDidUpdate(oldProps) {
     const { isOpen, article, loadArticleComments } = this.props
-    if (
-      isOpen &&
-      !oldProps.isOpen &&
-      !article.commentsLoading &&
-      !article.commentsLoaded
-    ) {
+    if (isOpen && !oldProps.isOpen && !article.commentsLoading && !article.commentsLoaded) {
       loadArticleComments(article.id)
     }
   }
@@ -32,11 +28,7 @@ class CommentList extends Component {
     return (
       <div className="comments">
         {this.header}
-        <CSSTransition
-          transitionName="comments"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-        >
+        <CSSTransition transitionName="comments" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
           {this.body}
         </CSSTransition>
       </div>
@@ -48,6 +40,7 @@ class CommentList extends Component {
     const text = isOpen ? 'hide comments' : 'show comments'
     const header = (
       <header>
+        <UserConsumer>{(user) => <h3>Username: {user}</h3>}</UserConsumer>
         <h4> Comment list: </h4>
         <button onClick={toggleOpenItem}>{text}</button>
       </header>
@@ -68,11 +61,7 @@ class CommentList extends Component {
 
     const body = (
       <div className="comment-body">
-        {comments.length !== 0 ? (
-          <ul> {this.getComments(comments)} </ul>
-        ) : (
-          <small> No comments yet </small>
-        )}
+        {comments.length !== 0 ? <ul> {this.getComments(comments)} </ul> : <small> No comments yet </small>}
         <CommentForm articleId={id} />
       </div>
     )

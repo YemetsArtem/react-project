@@ -25,19 +25,15 @@ class Article extends PureComponent {
     if (!this.props.article) return null
 
     return (
-      <article className="article">
+      <div className="article">
         <header className="article-title">
           <h3>{this.props.article.title}</h3>
           <button onClick={this.handleDelete}>delete</button>
         </header>
-        <CSSTransition
-          transitionName="article"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-        >
+        <CSSTransition transitionName="article" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
           {this.body}
         </CSSTransition>
-      </article>
+      </div>
     )
   }
 
