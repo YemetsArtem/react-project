@@ -15,11 +15,7 @@ export class ArticlesPage extends Component {
   }
 
   getArticle = ({ match }) => {
-    return match ? (
-      <Article id={match.params.id} key={match.params.id} />
-    ) : (
-      <h3>Please select an Article...</h3>
-    )
+    return match ? <Article id={match.params.id} key={match.params.id} /> : <h3>Please select an Article...</h3>
   }
 }
 

@@ -2,20 +2,18 @@ export const en = {
   'delete me': 'delete me',
   'show comments': 'show comments',
   'hide comments': 'hide comments',
-  'No comments yet': 'No comments yet',
-  Loading: 'Loading',
-  close: 'close',
-  open: 'open'
+  loading: 'Loading...',
+  submit: 'submit',
+  'No comments yet': 'No comments yet'
 }
 
 export const ru = {
   'delete me': 'удалить статью',
   'show comments': 'показать комментарии',
   'hide comments': 'спрятать комментарии',
-  Loading: 'Загрузка',
-  'No comments yet': 'Пока нет комментариев',
-  close: 'закрыть',
-  open: 'открыть'
+  loading: 'Загрузка...',
+  submit: 'отправить',
+  'No comments yet': 'Пока нет комментариев'
 }
 
 export default { ru, en }

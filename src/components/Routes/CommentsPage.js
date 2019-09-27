@@ -3,11 +3,7 @@ import CommentsPagination from '../CommentsPagination'
 import { Redirect, Route } from 'react-router-dom'
 
 function CommentsPage({ match }) {
-  return match.isExact ? (
-    <Redirect to="/comments/1" />
-  ) : (
-    <Route path="/comments/:page" render={getCommentsPaginator} />
-  )
+  return match.isExact ? <Redirect to="/comments/1" /> : <Route path="/comments/:page" render={getCommentsPaginator} />
 }
 
 function getCommentsPaginator({ match }) {

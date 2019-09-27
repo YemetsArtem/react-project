@@ -6,6 +6,7 @@ import { deleteArticle, loadArticleById } from '../../ac'
 import { articleSelector } from '../../selectors'
 import Loader from '../common/loader'
 import CommentList from '../CommentList'
+import translator from '../../decorators/translator'
 import './style.css'
 
 class Article extends PureComponent {
@@ -22,13 +23,14 @@ class Article extends PureComponent {
   }
 
   render() {
-    if (!this.props.article) return null
+    const { article, translate } = this.props
+    if (!article) return null
 
     return (
       <div className="article">
         <header className="article-title">
-          <h3>{this.props.article.title}</h3>
-          <button onClick={this.handleDelete}>delete</button>
+          <h3>{article.title}</h3>
+          <button onClick={this.handleDelete}>{translate('delete me')}</button>
         </header>
         <CSSTransition transitionName="article" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
           {this.body}
@@ -60,4 +62,4 @@ export default connect(
     article: articleSelector(state, props)
   }),
   { deleteArticle, loadArticleById }
-)(Article)
+)(translator(Article))

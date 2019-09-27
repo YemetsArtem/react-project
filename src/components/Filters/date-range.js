@@ -13,14 +13,10 @@ class DateRange extends Component {
 
   render() {
     const { from, to } = this.props.range
-    const selectedRange =
-      from && to && `${from.toDateString()} - ${to.toDateString()}`
+    const selectedRange = from && to && `${from.toDateString()} - ${to.toDateString()}`
     return (
       <div className="date-range">
-        <DayPicker
-          selectedDays={(day) => DateUtils.isDayInRange(day, { from, to })}
-          onDayClick={this.handleDayClick}
-        />
+        <DayPicker selectedDays={(day) => DateUtils.isDayInRange(day, { from, to })} onDayClick={this.handleDayClick} />
         {selectedRange}
       </div>
     )

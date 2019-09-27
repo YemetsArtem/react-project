@@ -1,7 +1,8 @@
 import React from 'react'
+import translator from '../../decorators/translator'
 
-function Loader() {
-  return <h2>Loading...</h2>
+function Loader(props) {
+  return <h2>{props.translate('loading')}</h2>
 }
 
-export default Loader
+export default translator(Loader)

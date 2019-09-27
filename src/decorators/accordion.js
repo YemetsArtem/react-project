@@ -12,12 +12,6 @@ export default (OriginalComponent) =>
       })
 
     render() {
-      return (
-        <OriginalComponent
-          {...this.props}
-          {...this.state}
-          toggleOpenItem={this.toggleOpenItem}
-        />
-      )
+      return <OriginalComponent {...this.props} {...this.state} toggleOpenItem={this.toggleOpenItem} />
     }
   }

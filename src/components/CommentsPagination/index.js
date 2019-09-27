@@ -4,11 +4,7 @@ import { NavLink } from 'react-router-dom'
 import Comment from '../Comment'
 import Loader from '../common/loader'
 import { checkAndLoadCommentsForPage } from '../../ac'
-import {
-  commentsPageLoadingSelector,
-  commentsPageIdsSelector,
-  totalCommentsSelector
-} from '../../selectors'
+import { commentsPageLoadingSelector, commentsPageIdsSelector, totalCommentsSelector } from '../../selectors'
 
 class CommentsPagination extends Component {
   componentDidMount() {
@@ -44,15 +40,13 @@ class CommentsPagination extends Component {
 
   getPaginator() {
     const { total } = this.props
-    const items = new Array(Math.floor((total - 1) / 5) + 1)
-      .fill()
-      .map((_, i) => (
-        <li key={i}>
-          <NavLink to={`/comments/${i + 1}`} activeStyle={{ color: 'red' }}>
-            {i + 1}
-          </NavLink>
-        </li>
-      ))
+    const items = new Array(Math.floor((total - 1) / 5) + 1).fill().map((_, i) => (
+      <li key={i}>
+        <NavLink to={`/comments/${i + 1}`} activeStyle={{ color: 'red' }}>
+          {i + 1}
+        </NavLink>
+      </li>
+    ))
     return <ul>{items}</ul>
   }
 }

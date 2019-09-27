@@ -22,14 +22,7 @@ class SelectFilter extends Component {
   }
 
   render() {
-    return (
-      <Select
-        options={this.options}
-        value={this.props.selected}
-        onChange={this.handleChange}
-        isMulti
-      />
-    )
+    return <Select options={this.options} value={this.props.selected} onChange={this.handleChange} isMulti />
   }
 }
 

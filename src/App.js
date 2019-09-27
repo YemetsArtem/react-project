@@ -7,7 +7,7 @@ import CommentsPage from './components/Routes/CommentsPage'
 import Counter from './components/Counter'
 import Menu, { MenuItem } from './components/Menu'
 import { Provider as UserProvider } from './components/contexts/user'
-import LangProvider from './components/i18n/lang-provider'
+import { Provider as LangProvider } from './components/contexts/lang'
 
 class App extends Component {
   state = {
@@ -20,10 +20,14 @@ class App extends Component {
 
   render() {
     return (
-      <LangProvider language={this.state.language}>
+      <LangProvider value={this.state.language}>
         <ul>
-          <li onClick={this.changeLanguage('en')}>English</li>
-          <li onClick={this.changeLanguage('ru')}>Russian</li>
+          <li>
+            <button onClick={this.changeLanguage('en')}>English</button>
+          </li>
+          <li>
+            <button onClick={this.changeLanguage('ru')}>Russian</button>
+          </li>
         </ul>
         <UserForm value={this.state.username} onChange={this.handlerUserChange} />
         <UserProvider value={this.state.username}>

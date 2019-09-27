@@ -134,8 +134,7 @@ export function checkAndLoadCommentsForPage(page) {
     const {
       comments: { pagination }
     } = getState()
-    if (pagination.getIn([page, 'loading']) || pagination.getIn([page, 'ids']))
-      return
+    if (pagination.getIn([page, 'loading']) || pagination.getIn([page, 'ids'])) return
 
     dispatch({
       type: LOAD_COMMENTS_FOR_PAGE,

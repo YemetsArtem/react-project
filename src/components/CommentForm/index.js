@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { addComment } from '../../ac'
+import translator from '../../decorators/translator'
 import './style.css'
 
 class CommentForm extends Component {
@@ -14,24 +15,11 @@ class CommentForm extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} className="comment-form">
-        user:{' '}
-        <input
-          value={this.state.user}
-          onChange={this.handleChange('user')}
-          className={this.getClassName('user')}
-        />
-        comment:{' '}
-        <input
-          value={this.state.text}
-          onChange={this.handleChange('text')}
-          className={this.getClassName('text')}
-        />
-        <input
-          type="submit"
-          value="submit"
-          disabled={!this.isValidForm()}
-          className={'save-btn'}
-        />
+        user: <input value={this.state.user} onChange={this.handleChange('user')} className={this.getClassName('user')} />
+        comment: <input value={this.state.text} onChange={this.handleChange('text')} className={this.getClassName('text')} />
+        <button disabled={!this.isValidForm()} className={'save-btn'}>
+          {this.props.translate('submit')}
+        </button>
       </form>
     )
   }
@@ -49,8 +37,7 @@ class CommentForm extends Component {
 
   isValidField = (type) => this.state[type].length >= limits[type].min
 
-  getClassName = (type) =>
-    this.isValidField(type) ? 'form-input' : 'form-input__error'
+  getClassName = (type) => (this.isValidField(type) ? 'form-input' : 'form-input__error')
 
   handleChange = (type) => (ev) => {
     const { value } = ev.target
@@ -77,4 +64,4 @@ export default connect(
   (dispatch, ownProps) => ({
     addComment: (comment) => dispatch(addComment(comment, ownProps.articleId))
   })
-)(CommentForm)
+)(translator(CommentForm))

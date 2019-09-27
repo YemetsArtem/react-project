@@ -8,6 +8,7 @@ import CommentForm from '../CommentForm'
 import toggleOpen from '../../decorators/toggleOpen'
 import Loader from '../common/loader'
 import { Consumer as UserConsumer } from '../contexts/user'
+import translator from '../../decorators/translator'
 import './style.css'
 
 class CommentList extends Component {
@@ -36,13 +37,13 @@ class CommentList extends Component {
   }
 
   get header() {
-    const { isOpen, toggleOpenItem } = this.props
+    const { isOpen, toggleOpenItem, translate } = this.props
     const text = isOpen ? 'hide comments' : 'show comments'
     const header = (
       <header>
         <UserConsumer>{(user) => <h3>Username: {user}</h3>}</UserConsumer>
         <h4> Comment list: </h4>
-        <button onClick={toggleOpenItem}>{text}</button>
+        <button onClick={toggleOpenItem}>{translate(text)}</button>
       </header>
     )
 
@@ -52,7 +53,8 @@ class CommentList extends Component {
   get body() {
     const {
       article: { comments, id, commentsLoading, commentsLoaded },
-      isOpen
+      isOpen,
+      translate
     } = this.props
 
     if (!isOpen) return null
@@ -60,10 +62,10 @@ class CommentList extends Component {
     if (!commentsLoaded) return null
 
     const body = (
-      <div className="comment-body">
-        {comments.length !== 0 ? <ul> {this.getComments(comments)} </ul> : <small> No comments yet </small>}
+      <ul className="comment-body">
+        {comments.length !== 0 ? this.getComments(comments) : <li>{translate('No comments yet')}</li>}
         <CommentForm articleId={id} />
-      </div>
+      </ul>
     )
 
     return isOpen && body
@@ -81,4 +83,4 @@ class CommentList extends Component {
 export default connect(
   null,
   { loadArticleComments }
-)(toggleOpen(CommentList))
+)(translator(toggleOpen(CommentList)))

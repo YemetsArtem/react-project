@@ -1,8 +1,4 @@
-import {
-  CHANGE_SELECTION,
-  CHANGE_DATE_RANGE,
-  DELETE_ARTICLE
-} from '../constants'
+import { CHANGE_SELECTION, CHANGE_DATE_RANGE, DELETE_ARTICLE } from '../constants'
 
 const defaultFilters = {
   selected: [],
@@ -25,9 +21,7 @@ export default (filters = defaultFilters, action) => {
     case DELETE_ARTICLE:
       return {
         ...filters,
-        selected: filters.selected.filter(
-          (selected) => selected.value !== payload.id
-        )
+        selected: filters.selected.filter((selected) => selected.value !== payload.id)
       }
 
     default:

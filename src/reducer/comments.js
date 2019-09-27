@@ -1,10 +1,4 @@
-import {
-  ADD_COMMENT,
-  LOAD_ARTICLE_COMMENTS,
-  LOAD_COMMENTS_FOR_PAGE,
-  START,
-  SUCCESS
-} from '../constants'
+import { ADD_COMMENT, LOAD_ARTICLE_COMMENTS, LOAD_COMMENTS_FOR_PAGE, START, SUCCESS } from '../constants'
 import { arrToMap } from './utils'
 import { Record, OrderedMap, Map } from 'immutable'
 
@@ -34,10 +28,7 @@ export default (commentsState = new ReducerRecord(), action) => {
       )
 
     case LOAD_ARTICLE_COMMENTS + SUCCESS:
-      return commentsState.mergeIn(
-        ['entities'],
-        arrToMap(response, CommentRecord)
-      )
+      return commentsState.mergeIn(['entities'], arrToMap(response, CommentRecord))
 
     case LOAD_COMMENTS_FOR_PAGE + START:
       return commentsState.setIn(['pagination', payload.page, 'loading'], true)
@@ -46,10 +37,7 @@ export default (commentsState = new ReducerRecord(), action) => {
       return commentsState
         .set('total', response.total)
         .mergeIn(['entities'], arrToMap(response.records, CommentRecord))
-        .setIn(
-          ['pagination', payload.page, 'ids'],
-          response.records.map((comment) => comment.id)
-        )
+        .setIn(['pagination', payload.page, 'ids'], response.records.map((comment) => comment.id))
         .setIn(['pagination', payload.page, 'loading'], false)
 
     default:
